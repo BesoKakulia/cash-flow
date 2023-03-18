@@ -46,10 +46,29 @@ export function calcCashInFee(amount, commision) {
   return Math.min(commision.max, (amount * commision.percents) / 100);
 }
 
-export function calculateCommision(operation) {
+function calcExeedAmount(operations, operation) {
+  const { userId, amount, date } = operation;
+
+  const userOperations = operations.filter((op) => {
+    return (
+      op.type === 'cash_out' &&
+      op.userType === 'natural' &&
+      userId === operation.userId
+    );
+  });
+}
+
+export function calcNaturalCashOutFee(commision) {
+  const { percents, exceedAmount } = commision;
+
+  return (exceedAmount * percents) / 100;
+}
+
+export function calculateCommision(operation, userOperations) {
   const {
     type,
     operation: { amount },
+    userType,
   } = operation;
 
   if (type === 'cash_in') {
@@ -59,12 +78,34 @@ export function calculateCommision(operation) {
     };
     return calcCashInFee(amount, commision);
   }
+
+  if (type === 'cash_out' && userType === 'natural') {
+    const commision = {
+      percents: feeConfig.cashIn.percents,
+      exceed: calcExeedAmount(operation, userOperations),
+    };
+    return calcNaturalCashOutFee(amount, commision);
+  }
 }
 
-export function calculateCommissions(oprations) {
+export function calculateCommissions(operations) {
+  const usersOperations = operations.reduce((result, operation) => {
+    const { userId } = operation;
+    if (result[userId]) {
+      result[userId] = [...result[userId], operation];
+      return result;
+    } else {
+      result[userId] = [operation];
+      return result;
+    }
+  }, {});
+
   oprations.forEach((operation) => {
-    console.log(calculateCommision(operation));
+    const userOperations = usersOperations[operation.userId];
+    console.log(calculateCommision(operation, userOperations));
   });
 }
 
-console.log(getOperations(fs.readFileSync('src/mockData.json')));
+console.log(
+  calculateCommissions(getOperations(fs.readFileSync('src/mockData.json')))
+);
