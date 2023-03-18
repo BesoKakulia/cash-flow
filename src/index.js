@@ -1,10 +1,16 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function getCommission(inputFile) {
-  const input = fs.readFileSync(inputFile);
+export function getOperations(input) {
   // catch errors
   const parsedInput = JSON.parse(input);
-  return parsedInput;
+  const mappedInput = parsedInput.map(
+    ({ date, user_id, user_type, type, operation }) => ({
+      date,
+      userId: user_id,
+      userType: user_type,
+      type,
+      operation,
+    })
+  );
+  return mappedInput;
 }
-
-module.exports = { getCommission };
