@@ -48,10 +48,7 @@ export function calcCashInFee(amount, commision) {
 }
 
 function calcWeekCashOut(operation, userOperations) {
-  const {
-    date,
-    operation: { amount },
-  } = operation;
+  const { date } = operation;
 
   // TODO bug when two transactions has the same day
   const operationsInCurrentOperationWeek = userOperations.filter(
@@ -66,17 +63,23 @@ function calcWeekCashOut(operation, userOperations) {
     0
   );
 
-  return prevTransSum + amount;
+  return prevTransSum;
 }
 
-export function calcNaturalCashOutFee(commision) {
+export function calcNaturalCashOutFee(currAmount, commision) {
   const { percents, weekAmount } = commision;
 
-  if (weekAmount <= 1000) {
+  const cashOutSum = weekAmount + currAmount;
+
+  if (cashOutSum <= 1000) {
     return 0;
   }
 
-  return ((weekAmount - 1000) * percents) / 100;
+  if (weekAmount >= 1000) {
+    return (currAmount * percents) / 100;
+  }
+
+  return ((cashOutSum - 1000) * percents) / 100;
 }
 
 export function calcJuridicalCashOutFee(amount, commision) {
@@ -111,7 +114,7 @@ export function calculateCommision(operation, userOperations) {
        */
       weekAmount: calcWeekCashOut(operation, userOperations),
     };
-    return calcNaturalCashOutFee(commision);
+    return calcNaturalCashOutFee(amount, commision);
   }
 
   if (type === 'cash_out' && userType === 'juridical') {
@@ -134,7 +137,7 @@ function groupOperationsByUser(operations) {
 }
 export function calculateCommissions(operations) {
   const usersOperations = groupOperationsByUser(operations);
-  // const operation = operations[2];
+  // const operation = operations[3];
   // const userOperations = usersOperations[operation.userId];
 
   // return calculateCommision(operation, userOperations);
