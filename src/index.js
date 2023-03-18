@@ -73,15 +73,17 @@ export function calcNaturalCashOutFee(currAmount, commision) {
 
   const cashOutSum = weekAmount + currAmount;
 
-  if (cashOutSum <= 1000) {
+  const weekLimit = feeConfig.cashOut.natural.weekLimit.amount;
+
+  if (cashOutSum <= weekLimit) {
     return 0;
   }
 
-  if (weekAmount >= 1000) {
+  if (weekAmount >= weekLimit) {
     return (currAmount * percents) / 100;
   }
 
-  return ((cashOutSum - 1000) * percents) / 100;
+  return ((cashOutSum - weekLimit) * percents) / 100;
 }
 
 export function calcJuridicalCashOutFee(amount, commision) {
