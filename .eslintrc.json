@@ -28,5 +28,8 @@
         "no-plusplus": "off",
         "no-process-exit": "off",
         "class-methods-use-this": "off"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     }
 }
