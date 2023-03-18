@@ -1,0 +1,22 @@
+{
+  "name": "cash-flow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BesoKakulia/cash-flow.git"
+  },
+  "author": "Beso Kakulia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BesoKakulia/cash-flow/issues"
+  },
+  "homepage": "https://github.com/BesoKakulia/cash-flow#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
