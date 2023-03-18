@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { calculateCommision } from './commision';
+import { calculateCommision } from '../src/commision.js';
 
 export function getOperations(input) {
   try {
@@ -33,15 +33,21 @@ function groupOperationsByUser(operations) {
   }, {});
 }
 
-export function calculateCommissions(operations) {
+export function calculateCommisions(operations) {
   const usersOperations = groupOperationsByUser(operations);
 
-  operations.forEach((operation) => {
+  const commisions = operations.map((operation) => {
     const userOperations = usersOperations[operation.userId];
-    console.log(calculateCommision(operation, userOperations));
+    return calculateCommision(operation, userOperations);
+  });
+  return commisions;
+}
+
+function logCommissions(file) {
+  const commisions = calculateCommisions(getOperations(fs.readFileSync(file)));
+  commisions.forEach((commision) => {
+    console.log(commision);
   });
 }
 
-console.log(
-  calculateCommissions(getOperations(fs.readFileSync('src/mockData.json')))
-);
+console.log(logCommissions('src/mockData.json'));
