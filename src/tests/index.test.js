@@ -13,4 +13,5 @@ test('get operations', () => {
     },
   ];
   expect(getOperations(input)).toEqual(mappedInput);
+  expect(getOperations(``)).toEqual([]);
 });
