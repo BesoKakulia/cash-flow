@@ -33,12 +33,17 @@ function groupOperationsByUser(operations) {
   }, {});
 }
 
+function roundCommision(fee) {
+  return Math.ceil(fee * 100) / 100;
+}
+
 export function calculateCommisions(operations) {
   const usersOperations = groupOperationsByUser(operations);
 
   const commisions = operations.map((operation) => {
     const userOperations = usersOperations[operation.userId];
-    return calculateCommision(operation, userOperations);
+    const commision = calculateCommision(operation, userOperations);
+    return roundCommision(commision);
   });
   return commisions;
 }
