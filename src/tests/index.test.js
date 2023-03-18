@@ -24,10 +24,14 @@ test('get cash in commision fee', () => {
   expect(calcCashInFee(100, { max: 10, percents: 0.2 })).toBe(0.2);
 });
 
-test.only('get cash out nautral commision fee', () => {
-  expect(calcNaturalCashOutFee({ exceedAmount: 200, percents: 0.3 })).toBe(0.6);
-  expect(calcNaturalCashOutFee({ exceedAmount: 25, percents: 0.3 })).toBe(
-    0.075
+test('get cash out nautral commision fee', () => {
+  expect(calcNaturalCashOutFee(200, { weekAmount: 1000, percents: 0.3 })).toBe(
+    0.6
   );
-  expect(calcNaturalCashOutFee({ exceedAmount: 0, percents: 0.3 })).toBe(0);
+  expect(calcNaturalCashOutFee(400, { weekAmount: 230, percents: 0.3 })).toBe(
+    0
+  );
+  expect(calcNaturalCashOutFee(3000, { weekAmount: 2000, percents: 0.3 })).toBe(
+    9
+  );
 });
