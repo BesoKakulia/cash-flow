@@ -1,10 +1,10 @@
 import fs from 'fs';
+import { getOperations } from '../index';
 import {
-  getOperations,
   calcCashInFee,
   calcNaturalCashOutFee,
   calcJuridicalCashOutFee,
-} from '../index';
+} from '../commision';
 
 test('get operations', () => {
   const input = fs.readFileSync('src/tests/mock.json');
