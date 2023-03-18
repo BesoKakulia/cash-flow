@@ -1,5 +1,10 @@
 import fs from 'fs';
-import { getOperations, calcCashInFee, calcNaturalCashOutFee } from '../index';
+import {
+  getOperations,
+  calcCashInFee,
+  calcNaturalCashOutFee,
+  calcJuridicalCashOutFee,
+} from '../index';
 
 test('get operations', () => {
   const input = fs.readFileSync('src/tests/mock.json');
@@ -34,4 +39,12 @@ test('get cash out nautral commision fee', () => {
   expect(calcNaturalCashOutFee(3000, { weekAmount: 2000, percents: 0.3 })).toBe(
     9
   );
+});
+
+test('get cash out juridical commision fee', () => {
+  const commision = { min: { amount: 0.5 }, percents: 0.3 };
+  expect(calcJuridicalCashOutFee(200, commision)).toBe(0.6);
+  expect(calcJuridicalCashOutFee(100, commision)).toBe(0.5);
+  expect(calcJuridicalCashOutFee(1, commision)).toBe(0.5);
+  expect(calcJuridicalCashOutFee(10000000, commision)).toBe(30000);
 });
