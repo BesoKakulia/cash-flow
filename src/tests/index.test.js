@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { getOperations } from '../index';
+import { getOperations, calcCashInFee } from '../index';
 
 test('get operations', () => {
   const input = fs.readFileSync('src/tests/mock.json');
@@ -14,4 +14,12 @@ test('get operations', () => {
   ];
   expect(getOperations(input)).toEqual(mappedInput);
   expect(getOperations(``)).toEqual([]);
+});
+
+test.only('get cash in commision fee', () => {
+  const commision = { max: 5, percents: 0.03 };
+  expect(calcCashInFee(200, commision)).toBe(0.06);
+  expect(calcCashInFee(1000000, commision)).toBe(5);
+  expect(calcCashInFee(30, commision)).toBe(0.009);
+  expect(calcCashInFee(100, { max: 10, percents: 0.2 })).toBe(0.2);
 });
