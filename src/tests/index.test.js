@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { getOperations } from '../index';
+import { parseOperations } from '../index';
 import {
   calcCashInFee,
   calcNaturalCashOutFee,
@@ -17,8 +17,8 @@ test('get operations', () => {
       operation: { amount: 200.0, currency: 'EUR' },
     },
   ];
-  expect(getOperations(input)).toEqual(mappedInput);
-  expect(getOperations(``)).toEqual([]);
+  expect(parseOperations(input)).toEqual(mappedInput);
+  expect(parseOperations(``)).toEqual([]);
 });
 
 test('get cash in commision fee', () => {
@@ -48,3 +48,5 @@ test('get cash out juridical commision fee', () => {
   expect(calcJuridicalCashOutFee(1, commision)).toBe(0.5);
   expect(calcJuridicalCashOutFee(10000000, commision)).toBe(30000);
 });
+
+test('calculate commisions', () => {});
