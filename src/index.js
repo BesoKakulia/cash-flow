@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { calculateCommision } from '../src/commision.js';
 
-export function getOperations(input) {
+export function parseOperations(input) {
   try {
     const parsedInput = JSON.parse(input);
     const mappedInput = parsedInput.map(
@@ -44,10 +44,12 @@ export function calculateCommisions(operations) {
 }
 
 function logCommissions(file) {
-  const commisions = calculateCommisions(getOperations(fs.readFileSync(file)));
+  const commisions = calculateCommisions(
+    parseOperations(fs.readFileSync(file))
+  );
   commisions.forEach((commision) => {
     console.log(commision);
   });
 }
 
-console.log(logCommissions('src/mockData.json'));
+logCommissions('src/mockData.json');
