@@ -60,7 +60,6 @@ function calcWeekCashOut(operation, userOperations) {
       dayjs(date).isAfter(op.date)
   );
 
-  console.log(dayjs(date).isSame('2016-01-07', 'week'));
   const prevTransSum = operationsInCurrentWeek.reduce(
     (sum, op) => (sum += op.operation.amount),
     0
@@ -138,17 +137,18 @@ function groupOperationsByUser(operations) {
     }
   }, {});
 }
+
 export function calculateCommissions(operations) {
   const usersOperations = groupOperationsByUser(operations);
-  const operation = operations[5];
-  const userOperations = usersOperations[operation.userId];
+  // const operation = operations[5];
+  // const userOperations = usersOperations[operation.userId];
 
-  return calculateCommision(operation, userOperations);
+  // return calculateCommision(operation, userOperations);
 
-  // operations.forEach((operation) => {
-  //   const userOperations = usersOperations[operation.userId];
-  //   console.log(calculateCommision(operation, userOperations));
-  // });
+  operations.forEach((operation) => {
+    const userOperations = usersOperations[operation.userId];
+    console.log(calculateCommision(operation, userOperations));
+  });
 }
 
 console.log(
