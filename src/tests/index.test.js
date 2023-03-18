@@ -6,7 +6,7 @@ import {
   calcJuridicalCashOutFee,
 } from '../commision';
 
-test('get operations', () => {
+test('parse operations', () => {
   const input = fs.readFileSync('src/tests/mock.json');
   const mappedInput = [
     {
