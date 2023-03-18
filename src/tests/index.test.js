@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { parseOperations } from '../index';
+import { parseOperations, calculateCommisions } from '../index';
 import {
   calcCashInFee,
   calcNaturalCashOutFee,
@@ -49,4 +49,24 @@ test('get cash out juridical commision fee', () => {
   expect(calcJuridicalCashOutFee(10000000, commision)).toBe(30000);
 });
 
-test('calculate commisions', () => {});
+test('calculate commisions', () => {
+  const input = fs.readFileSync('src/mockData.json');
+  const operations = parseOperations(input);
+  expect(calculateCommisions(operations)).toEqual([
+    0.06, 0.9, 87, 3, 0.3, 0.3, 5, 0, 0,
+  ]);
+});
+
+test('calculate commisions, round fee', () => {
+  expect(
+    calculateCommisions([
+      {
+        date: '2016-01-05',
+        userId: 1,
+        userType: 'juridical',
+        type: 'cash_out',
+        operation: { amount: 215, currency: 'EUR' },
+      },
+    ])
+  ).toEqual([0.65]);
+});
