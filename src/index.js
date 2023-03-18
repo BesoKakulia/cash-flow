@@ -1,6 +1,8 @@
 import fs from 'fs';
 import dayjs from 'dayjs';
 
+dayjs.Ls.en.weekStart = 1;
+
 const feeConfig = {
   cashIn: {
     percents: 0.03,
@@ -51,14 +53,15 @@ function calcWeekCashOut(operation, userOperations) {
   const { date } = operation;
 
   // TODO bug when two transactions has the same day
-  const operationsInCurrentOperationWeek = userOperations.filter(
+  const operationsInCurrentWeek = userOperations.filter(
     (op) =>
       op.type === 'cash_out' &&
       dayjs(date).isSame(op.date, 'week') &&
       dayjs(date).isAfter(op.date)
   );
 
-  const prevTransSum = operationsInCurrentOperationWeek.reduce(
+  console.log(dayjs(date).isSame('2016-01-07', 'week'));
+  const prevTransSum = operationsInCurrentWeek.reduce(
     (sum, op) => (sum += op.operation.amount),
     0
   );
@@ -137,15 +140,15 @@ function groupOperationsByUser(operations) {
 }
 export function calculateCommissions(operations) {
   const usersOperations = groupOperationsByUser(operations);
-  // const operation = operations[3];
-  // const userOperations = usersOperations[operation.userId];
+  const operation = operations[5];
+  const userOperations = usersOperations[operation.userId];
 
-  // return calculateCommision(operation, userOperations);
+  return calculateCommision(operation, userOperations);
 
-  operations.forEach((operation) => {
-    const userOperations = usersOperations[operation.userId];
-    console.log(calculateCommision(operation, userOperations));
-  });
+  // operations.forEach((operation) => {
+  //   const userOperations = usersOperations[operation.userId];
+  //   console.log(calculateCommision(operation, userOperations));
+  // });
 }
 
 console.log(
