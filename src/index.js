@@ -106,14 +106,6 @@ export function calculateCommision(operation, userOperations) {
   if (type === 'cash_out' && userType === 'natural') {
     const commision = {
       percents: feeConfig.cashOut.natural.percents,
-      /** Not clear how the commision is calculated
-       * Is it calculated from sum of all exceeded money
-       * or from each transaction separately after the limit exceeded?
-       * example:
-       * if a user cash outs 1 000 000 the transation is 0.3 percent of 1 000 000
-       * then if the same user cash outs 100 in the same week,
-       * is commision 0.3 percent of 1 000 100 or 0.3 of 100
-       */
       weekAmount: calcWeekCashOut(operation, userOperations),
     };
     return calcNaturalCashOutFee(amount, commision);
