@@ -53,7 +53,7 @@ function logCommissions(file) {
     parseOperations(fs.readFileSync(file))
   );
   commisions.forEach((commision) => {
-    console.log(commision);
+    console.log(commision.toFixed(2));
   });
 }
 
