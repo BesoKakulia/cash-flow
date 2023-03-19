@@ -11,10 +11,10 @@ export function parseOperations(input) {
         userType: user_type,
         type,
         operation,
-        // Use as identifier to calculate week limit corectly,
-        // as for transactions that has the same amount cash out and the date, it is impossible
-        // to figure out is it the same transaction or not.
-        // to solve it we need more specific timestamp or operation id, or any other indentifier.
+        // Use as an identifier to calculate the week limit correctly,
+        // as for transactions that have the same amount of cash out and the date, it is impossible
+        // to figure out if is it the same transaction or not.
+        // to solve it we need a more specific timestamp or operation id, or any other identifier.
         operationId: index + 1,
       })
     );
