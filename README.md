@@ -11,4 +11,5 @@ Calculates transaction fee for given operations.
 ## Usage
 
 Run the program: `npm start` or `npm start {filepath}`
+
 Run tests: `npm run test`
