@@ -49,12 +49,16 @@ export function calculateCommisions(operations) {
 }
 
 function logCommissions(file) {
-  const commisions = calculateCommisions(
-    parseOperations(fs.readFileSync(file))
-  );
-  commisions.forEach((commision) => {
-    console.log(commision.toFixed(2));
-  });
+  try {
+    const fileData = fs.readFileSync(file);
+    const commisions = calculateCommisions(parseOperations(fileData));
+
+    commisions.forEach((commision) => {
+      console.log(commision.toFixed(2));
+    });
+  } catch {
+    throw 'Invalid filepath provided';
+  }
 }
 
 const filePath = process.argv[2] || 'src/mockData.json';
