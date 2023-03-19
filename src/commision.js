@@ -30,14 +30,13 @@ export function calcCashInFee(amount, commision) {
 }
 
 function calcWeekCashOut(operation, userOperations) {
-  const { date } = operation;
+  const { date, operationId } = operation;
 
-  // TODO bug when two transactions has the same day
   const operationsInCurrentWeek = userOperations.filter(
     (op) =>
       op.type === 'cash_out' &&
       dayjs(date).isSame(op.date, 'week') &&
-      dayjs(date).isAfter(op.date)
+      operationId > op.operationId
   );
 
   const prevTransSum = operationsInCurrentWeek.reduce(

@@ -5,12 +5,17 @@ export function parseOperations(input) {
   try {
     const parsedInput = JSON.parse(input);
     const mappedInput = parsedInput.map(
-      ({ date, user_id, user_type, type, operation }) => ({
+      ({ date, user_id, user_type, type, operation }, index) => ({
         date,
         userId: user_id,
         userType: user_type,
         type,
         operation,
+        // Use as identifier to calculate week limit corectly,
+        // as for transactions that has the same amount cash out and the date, it is impossible
+        // to figure out is it the same transaction or not.
+        // to solve it we need more specific timestamp or operation id, or any other indentifier.
+        operationId: index + 1,
       })
     );
 

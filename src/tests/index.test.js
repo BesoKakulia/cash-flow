@@ -15,6 +15,7 @@ test('parse operations', () => {
       userType: 'natural',
       type: 'cash_in',
       operation: { amount: 200.0, currency: 'EUR' },
+      operationId: 1,
     },
   ];
   expect(parseOperations(input)).toEqual(mappedInput);
@@ -66,7 +67,31 @@ test('calculate commisions, round fee', () => {
         userType: 'juridical',
         type: 'cash_out',
         operation: { amount: 215, currency: 'EUR' },
+        operationId: 1,
       },
     ])
   ).toEqual([0.65]);
+});
+
+test('calculate commisions, when two transactions has the same date and amount', () => {
+  expect(
+    calculateCommisions([
+      {
+        date: '2016-01-05',
+        userId: 1,
+        userType: 'natural',
+        type: 'cash_out',
+        operation: { amount: 1000, currency: 'EUR' },
+        operationId: 1,
+      },
+      {
+        date: '2016-01-05',
+        userId: 1,
+        userType: 'natural',
+        type: 'cash_out',
+        operation: { amount: 1000, currency: 'EUR' },
+        operationId: 2,
+      },
+    ])
+  ).toEqual([0, 3]);
 });
