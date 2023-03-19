@@ -1,10 +1,10 @@
 import fs from 'fs';
-import { parseOperations, calculateCommisions } from '../index';
+import { parseOperations, calculateCommisions } from '../index.js';
 import {
   calcCashInFee,
   calcNaturalCashOutFee,
   calcJuridicalCashOutFee,
-} from '../commision';
+} from '../commision.js';
 
 test('parse operations', () => {
   const input = fs.readFileSync('src/tests/mock.json');

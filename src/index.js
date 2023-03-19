@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { calculateCommision } from '../src/commision.js';
+import { calculateCommision } from './commision.js';
 
 export function parseOperations(input) {
   try {
@@ -57,4 +57,6 @@ function logCommissions(file) {
   });
 }
 
-logCommissions('src/mockData.json');
+const filePath = process.argv[2] || 'src/mockData.json';
+
+logCommissions(filePath);
